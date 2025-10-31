@@ -14,7 +14,9 @@
   --bg-top: #0a0e2a;
   --bg-bottom: #142a50;
 }
-
+html {
+  overflow: hidden; 
+}
 body {
   margin: 0;
   font-family: Inter, sans-serif;
@@ -22,9 +24,14 @@ body {
   background: linear-gradient(to bottom, var(--bg-top) 0%, var(--bg-bottom) 100%);
   overflow: hidden;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-/* simple moon */
+/* 🌕 Moon */
 .moon {
   position: absolute;
   top: 60px;
@@ -34,58 +41,61 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #fff9d9 0%, #f8d86c 70%, transparent 100%);
   box-shadow: 0 0 40px 10px rgba(255, 247, 200, 0.3);
+  z-index: 1;
 }
 
-/* gentle river */
+/* 🌊 River */
 .river {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(#1c2e52 0%, #0b142a 100%);
+  width: 100vw;
+  height: 180px;
   overflow: hidden;
+  background: linear-gradient(to top, #001f33 0%, #033a5b 60%, transparent 100%);
 }
 
-/* simple floating krathong */
+
+/* 🪷 Krathongs */
 .krathong {
   position: absolute;
-  bottom: 10px;
-  width: 60px;
-  animation: float 15s linear infinite;
-  opacity: 0.9;
-}
-@keyframes float {
-  0% { transform: translateX(-80px) translateY(0); }
-  50% { transform: translateX(50vw) translateY(-5px); }
-  100% { transform: translateX(110vw) translateY(0); }
+  bottom: 30px;
+  width: 80px;
+  /* start offscreen left */
+  left: -120px;
 }
 
-/* floating candle light */
-.krathong::before {
-  content: "🪔";
-  position: absolute;
-  top: -25px;
-  left: 16px;
-  font-size: 20px;
+/* Floating from offscreen left to offscreen right */
+@keyframes floatLinear {
+  0% { left: -120px; }
+  100% { left: 120vw; } /* move fully offscreen right */
 }
 
-/* invitation card */
+.krathong img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 💌 Invitation card */
 .wrap {
-  max-width: 400px;
-  margin: 80px auto 0;
-  text-align: center;
   position: relative;
   z-index: 2;
-}
-
-.card {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 16px;
   padding: 24px;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  max-width: 400px;
+  text-align: center;
+  margin-bottom: 200px;
+  animation: fadeIn 1.5s ease;
+}
+
+/* Fade-in for card */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 h2 {
@@ -117,10 +127,7 @@ h2 {
   white-space: pre-line;
   transition: opacity 1s ease;
 }
-
-.show {
-  opacity: 1;
-}
+.show { opacity: 1; }
 
 .response {
   display: none;
@@ -150,21 +157,151 @@ h2 {
   opacity: 0;
   transition: opacity .8s;
 }
+
+/* 📱 Optimized for 393x852 phones */
+@media (max-width: 430px) {
+  .moon {
+    top: 24px;
+    right: 24px;
+    width: 65px;
+    height: 65px;
+    box-shadow: 0 0 25px 6px rgba(255, 247, 200, 0.25);
+  }
+
+  .river {
+    height: 130px;
+    background: linear-gradient(to top, #001a2a 0%, #02405d 60%, transparent 100%);
+  }
+
+  .krathong {
+    width: 55px;
+    animation-duration: 16s;
+  }
+  .krathong:nth-child(1) { animation-duration: 15s; }
+  .krathong:nth-child(2) { animation-duration: 17s; }
+  .krathong:nth-child(3) { animation-duration: 18s; }
+
+  .wrap {
+    max-width: 90%;
+    margin-bottom: 130px;
+    padding: 18px;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .message {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .open-btn {
+    font-size: 15px;
+    padding: 10px 22px;
+  }
+
+  .response button {
+    font-size: 16px;
+    padding: 6px 14px;
+  }
+
+  .reply {
+    font-size: 18px;
+  }
+}
+
+#fwContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0; /* behind everything */
+}
+
+.firework-line {
+  position: absolute;
+  width: 2px;           /* thickness of streak */
+  height: 60px;         /* length of streak */
+  background: red;
+  opacity: 1;
+  border-radius: 1px;
+  transform-origin: bottom center; /* pivot at bottom */
+  animation: explode 2s forwards;
+}
+
+@keyframes explode {
+  to {
+    transform: rotate(var(--angle)) translateY(-var(--distance));
+    opacity: 0;
+  }
+}
+
+.firework-particle {
+  position: absolute;
+  width: 8px;       /* bigger particle */
+  height: 8px;
+  border-radius: 50%;
+  opacity: 1;
+  transform: translate(0,0);
+  animation: fwMove 3s linear forwards; /* slow 3s animation */
+}
+
+
+@keyframes particleBurst {
+  0% { opacity: 1; transform: translate(0,0) scale(0.5); }
+  80% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+}
+.wat-arun {
+  position: absolute;
+  bottom: 80px; /* closer to river */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; /* above river, below card */
+  width: 60vh;   /* bigger relative to viewport */
+  max-width: 600px; /* prevent extreme size on huge screens */
+}
+
+.wat-arun img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 </style>
 </head>
 <body>
 
+<!-- 🌕 Moon -->
 <div class="moon"></div>
-<div class="river">
-  <div class="krathong" style="left:5%; animation-delay:0s;">🪷</div>
-  <div class="krathong" style="left:40%; animation-delay:5s;">🪷</div>
-  <div class="krathong" style="left:75%; animation-delay:9s;">🪷</div>
+
+<div class="firework-container" id="fwContainer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;"></div>
+
+<div class="wat-arun">
+  <img src="images/wat-arun.png" alt="Wat Arun">
 </div>
 
+<!-- 🌊 River and krathongs -->
+<div class="river">
+  <div class="krathong"><img src="images/krathong.png" alt="krathong"></div>
+  <div class="krathong"><img src="images/lotus.png" alt="krathong"></div>
+  <div class="krathong"><img src="images/baitoey.png" alt="krathong"></div>
+</div>
+
+<!-- 💌 Invitation card -->
 <div class="wrap">
   <div class="card">
     <h2>Loy Krathong Night 🌕</h2>
-    <button class="open-btn" id="open">เปิดการ์ดเชิญ</button>
+    <button class="open-btn" id="open">Click me!</button>
     <div class="message" id="message">
       สวัสดีเก้ดด 💛  
       ปีนี้อยากชวนไปลอยกระทงด้วยกัน 🎆  
@@ -181,25 +318,89 @@ h2 {
 </div>
 
 <script>
-const openBtn=document.getElementById('open');
-const msg=document.getElementById('message');
-const response=document.getElementById('response');
-const reply=document.getElementById('reply');
+const openBtn = document.getElementById('open');
+const msg = document.getElementById('message');
+const response = document.getElementById('response');
+const reply = document.getElementById('reply');
+const krathongs = document.querySelectorAll('.krathong');
 
-openBtn.addEventListener('click',()=>{
-  msg.classList.add('show');
-  response.style.display='block';
-  openBtn.disabled=true;
+krathongs.forEach((k, i) => {
+  const duration = 15 + Math.random() * 10;   // speed
+  const bottom = 20 + Math.random() * 30;     // vertical offset
+  const delay = i * 3 + Math.random() * 2;    // staggered release
+
+  k.style.bottom = `${bottom}px`;
+  k.style.animation = `floatLinear ${duration}s linear ${delay}s infinite`;
 });
 
-document.getElementById('yes').onclick=()=>{
-  reply.textContent="เย้ ดีใจมากเลย 💫 แล้วเจอกันคืนลอยกระทงนะ 💕";
-  reply.style.opacity=1;
+openBtn.addEventListener('click', () => {
+  msg.classList.add('show');
+  response.style.display = 'block';
+  openBtn.disabled = true;
+});
+
+document.getElementById('yes').onclick = () => {
+  reply.textContent = "เย้ ดีใจมากเลย 💫 แล้วเจอกันคืนลอยกระทงนะ 💕";
+  reply.style.opacity = 1;
+};
+document.getElementById('maybe').onclick = () => {
+  reply.textContent = "ได้เลย เก้ดสะดวกเมื่อไหร่ก็บอกน้า 🌙";
+  reply.style.opacity = 1;
+};
+
+const fwContainer = document.getElementById('fwContainer');
+const colors = [
+  '#FFD700', // gold
+  '#FF4500', // orange-red
+  '#FF69B4', // hot pink
+  '#1E90FF', // dodger blue
+  '#32CD32', // lime green
+  '#FF8C00', // dark orange
+  '#BA55D3'  // medium orchid (purple)
+];
+
+function spawnParticleBurst() {
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight * 0.5; // top half only
+  const numParticles = 80 + Math.floor(Math.random() * 50); // very dense
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const maxDistance = 120 + Math.random() * 60; // particle spread
+
+  for (let i = 0; i < numParticles; i++) {
+    const particle = document.createElement('div');
+    const size = 2 + Math.random() * 3; // varying particle size
+    particle.style.position = 'absolute';
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.borderRadius = '50%';
+    particle.style.background = color;
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    particle.style.opacity = 1;
+    particle.style.filter = 'blur(1px)';
+
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * maxDistance;
+
+    particle.animate([
+      { transform: `translate(0,0) scale(0.5)`, opacity: 1 },
+      { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1)`, opacity: 0 }
+    ], {
+      duration: 2000 + Math.random() * 1000, // 2–3 seconds
+      easing: 'ease-out',
+      fill: 'forwards'
+    });
+
+    fwContainer.appendChild(particle);
+    setTimeout(() => particle.remove(), 2000);
+  }
 }
-document.getElementById('maybe').onclick=()=>{
-  reply.textContent="ได้เลย เก้ดสะดวกเมื่อไหร่ก็บอกน้า 🌙";
-  reply.style.opacity=1;
-}
+
+// Spawn bursts every 2–3 seconds
+setInterval(() => {
+  if (Math.random() < 0.7) spawnParticleBurst();
+}, 800);
+
 </script>
 
 </body>
