@@ -1,211 +1,204 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>A Letter to You!</title>
+<title>Loy Krathong Invitation 🌕</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg: #fdfaf6;
-  --paper: #fffdfa;
-  --accent: #C97BFF;
-  --text: #2b2b2b;
-  --muted: #6b6b6b;
+:root {
+  --accent: #ffd86b;
+  --text: #fff9e6;
+  --bg-top: #0a0e2a;
+  --bg-bottom: #142a50;
 }
 
-body{
-  margin:0;
-  padding:24px 12px 48px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  color: var(--text);
+  background: linear-gradient(to bottom, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  overflow: hidden;
+  height: 100vh;
 }
 
-.wrap{
-  max-width:380px;
-  margin:0 auto;
+/* simple moon */
+.moon {
+  position: absolute;
+  top: 60px;
+  right: 80px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff9d9 0%, #f8d86c 70%, transparent 100%);
+  box-shadow: 0 0 40px 10px rgba(255, 247, 200, 0.3);
 }
 
-.card{
-  background: var(--paper);
-  padding:24px;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(16,18,23,0.15);
-  border:1px solid rgba(200,123,255,0.25);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+/* gentle river */
+.river {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(#1c2e52 0%, #0b142a 100%);
+  overflow: hidden;
 }
 
-.open-btn{
-  padding:12px 24px;
-  border-radius:50px;
-  border:none;
-  background: linear-gradient(145deg,#f9f5ff,#fff0ff);
+/* simple floating krathong */
+.krathong {
+  position: absolute;
+  bottom: 10px;
+  width: 60px;
+  animation: float 15s linear infinite;
+  opacity: 0.9;
+}
+@keyframes float {
+  0% { transform: translateX(-80px) translateY(0); }
+  50% { transform: translateX(50vw) translateY(-5px); }
+  100% { transform: translateX(110vw) translateY(0); }
+}
+
+/* floating candle light */
+.krathong::before {
+  content: "🪔";
+  position: absolute;
+  top: -25px;
+  left: 16px;
+  font-size: 20px;
+}
+
+/* invitation card */
+.wrap {
+  max-width: 400px;
+  margin: 80px auto 0;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+h2 {
+  font-family: 'Dancing Script', cursive;
   color: var(--accent);
-  font-weight:600;
-  cursor:pointer;
-  margin:16px 0;
-  font-size:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.12);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.open-btn {
+  padding: 12px 28px;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(145deg, #ffe5a8, #ffd86b);
+  color: #5b4400;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 16px 0;
+  font-size: 16px;
   transition: all 0.2s ease;
 }
 .open-btn:hover { transform: translateY(-2px); }
-.open-btn:active { transform: translateY(1px) scale(0.98); }
 
-.paper{
-  width:100%;
-  position:relative;
-  padding: 32px 20px 40px;
-  margin-top:16px;
-  background: var(--paper);
-  border-radius:8px;
-  box-sizing:border-box;
-}
-
-.handwriting{
+.message {
   font-family: 'Dancing Script', cursive;
-  font-size: 19px;         /* slightly bigger */
-  color: var(--text);
+  font-size: 20px;
   opacity: 0;
-  transform: translateY(6px);
+  line-height: 1.6;
+  white-space: pre-line;
+  transition: opacity 1s ease;
 }
-.handwriting.show {
+
+.show {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease;
 }
 
-.line{ display:block; opacity:0; margin-bottom: 14px; transform:translateY(8px); transition: all 0.6s ease; }
-
-.line.show{ opacity:1; transform:translateY(0); }
-
-.meta{
-  margin-top:18px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  font-size:12px;
-  color:var(--muted);
+.response {
+  display: none;
+  margin-top: 20px;
 }
-
-.heart{
-  display:inline-grid; place-items:center;
-  width:36px; height:36px; border-radius:999px;
-  border:1px solid rgba(201,123,255,0.18);
-  background: rgba(201,123,255,0.06);
-  cursor:pointer;
-}
-
-.heart svg{ width:16px; height:16px; fill:none; stroke:var(--accent); stroke-width:1.6; }
-
-.final-line{
-  display:none;
-  margin-top:20px;
-  font-family:'Dancing Script', cursive;
-  font-size:16px;
+.response button {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
   color: var(--accent);
-  text-align:center;
-  padding:12px 16px;
-  border-radius:12px;
-  background: rgba(201,123,255,0.08);
+  font-family: 'Dancing Script', cursive;
+  font-size: 18px;
+  padding: 6px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 0 8px;
+  transition: .3s;
+}
+.response button:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.reply {
+  margin-top: 20px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity .8s;
 }
 </style>
 </head>
 <body>
 
+<div class="moon"></div>
+<div class="river">
+  <div class="krathong" style="left:5%; animation-delay:0s;">🪷</div>
+  <div class="krathong" style="left:40%; animation-delay:5s;">🪷</div>
+  <div class="krathong" style="left:75%; animation-delay:9s;">🪷</div>
+</div>
+
 <div class="wrap">
   <div class="card">
-    <button class="open-btn" id="open">Click Me!</button>
-
-    <div class="paper" aria-hidden="true" id="paper"> 
-        <div class="handwriting" id="handwriting"> 
-            <span class="line">สวัสดีเก้ดด 🌸 เป็นยังไงบ้างงง สบายดีม้ายย หวังว่าจะสบายดีน้าา</span> 
-            <span class="line">เก้ดอาจจะสงสัยว่านี่มันคืออีหยังวะ</span> 
-            <span class="line">พูดง่ายๆเลยก็คือเป็นโปรเจคเล็กๆที่เราทำขึ้นมาเองง ผลลัพธ์จะออกมาตามคาดม้ายก้ไม่รุ้ ㅠㅠ</span> 
-            <span class="line">คือว่านะ จริงๆเราก็ไม่รู้จะอธิบายออกมาเป็นคำพูดยังไงดีเหมือนกัน 😫 </span> 
-            <span class="line">หลังจากที่เราไม่ได้เจอกัน เราก็นั่งคิดกับตัวเองมาตลอดว่าไม่อยากให้มันเป็นอย่างงี้เลย 😭</span> 
-            <span class="line">อาจจะฟังดูเห็นแก่ตัวหน่อยแต่ว่า</span> 
-            <span class="line">เรายังอยากมีเก้ดในชีวิตอยู่ ไม่อยากให้เก้ดเป็นแค่คนที่เคยเรียนด้วยกันตอนมัธยม</span> 
-            <span class="line">ถึงเพื่อนเราจะไม่เห็นด้วยกับสิ่งที่เราทำอยู่ตอนนี้ก็เถอะแต่เราเชื่อว่าความรู้สึกของเรามันคือของจริง</span> 
-            <span class="line">อยากกลับมาคุยกับเก้ดให้เป็นปกติ อยากส่งคลิปตลกๆให้ดู หรือถ้าสะดวกใจก็อาจจะไปหาของอร่อยๆกิน หากิจกรรมทำด้วยกันก้ได้</span> 
-            <span class="line">เราไม่รู้หรอกว่าตอนนี้เก้ดมีใครในใจแล้วอ๊ะป่าว แต่เราเชื่อจากใจจริงว่าถ้าในทุกๆวันเรามีเก้ดอยู่ เราทั้งคู่อาจเป็นสีสันของชีวิตกันและกันได้นะ 🌟 </span> 
-            <span class="line">แล้วเก้ดล่ะคิดว่ายังไงบ้างง</span> 
+    <h2>Loy Krathong Night 🌕</h2>
+    <button class="open-btn" id="open">เปิดการ์ดเชิญ</button>
+    <div class="message" id="message">
+      สวัสดีเก้ดด 💛  
+      ปีนี้อยากชวนไปลอยกระทงด้วยกัน 🎆  
+      เดินดูแสงไฟกับเสียงน้ำเบาๆ 🌊  
+      แล้วขอพรใต้แสงจันทร์ด้วยกันนะ 🌕  
+      ถ้าเก้ดว่าง...ไปด้วยกันน้า 🌸
     </div>
-
-      <div class="meta">
-        <div class="heart" id="heart" title="tap to send a little warmth">
-          <svg viewBox="0 0 24 24"><path d="M12 20s-6.5-4.35-9-7.1C-0.4 9.4 3 4 7.5 5.5 9.5 6.2 11 8 12 9.5c1-1.5 2.5-3.3 4.5-4.0C21 4 24.4 9.4 21 12.9 18.5 15.65 12 20 12 20z"/></svg>
-        </div>
-        <div style="margin-top:6px;"> กดเล่นด้ายยย </div>
-      </div>
-
-      <div class="final-line" id="final">ขอบคุณที่อ่านจนจบน้า ไม่ต้องรีบให้คำตอบก็ได้ เรารอได้เสมออออ 😊✨</div>
+    <div class="response" id="response">
+      <button id="yes">ไปสิ 💕</button>
+      <button id="maybe">ขอดูก่อน 😅</button>
     </div>
+    <div class="reply" id="reply"></div>
   </div>
 </div>
 
 <script>
-const openBtn = document.getElementById('open');
-const handwriting = document.getElementById('handwriting');
-const lines = handwriting.querySelectorAll('.line');
-const heart = document.getElementById('heart');
-const finalLine = document.getElementById('final');
+const openBtn=document.getElementById('open');
+const msg=document.getElementById('message');
+const response=document.getElementById('response');
+const reply=document.getElementById('reply');
 
-openBtn.addEventListener('click', () => {
-  openBtn.disabled = true;
-  openBtn.style.opacity = 0.7;
-  handwriting.classList.add('show');
-  lines.forEach((line, i) => {
-    setTimeout(()=> line.classList.add('show'), i*400);
-  });
-  setTimeout(()=> finalLine.style.display='block', lines.length*400+200);
+openBtn.addEventListener('click',()=>{
+  msg.classList.add('show');
+  response.style.display='block';
+  openBtn.disabled=true;
 });
 
-heart.addEventListener('click', () => {
-  heart.animate([{transform:'scale(1)'},{transform:'scale(1.14)'},{transform:'scale(1)'}],{duration:300, easing:'ease-out'});
-  for(let i=0;i<6;i++){ createPetal(); }
-});
-
-function createPetal() {
-  const petal = document.createElement('div');
-  petal.textContent = '🩷';
-
-  // Get heart center position relative to the page
-  const rect = heart.getBoundingClientRect();
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-  const startX = rect.left + rect.width / 2 + (Math.random() * 20 - 10) + scrollLeft;
-  const startY = rect.top + rect.height / 2 + (Math.random() * 10 - 5) + scrollTop;
-
-  petal.style.position = 'absolute';
-  petal.style.left = startX + 'px';
-  petal.style.top = startY + 'px';
-  petal.style.fontSize = (12 + Math.random() * 16) + 'px';
-  petal.style.opacity = 0.9;
-  petal.style.pointerEvents = 'none';
-  petal.style.userSelect = 'none';
-  
-  document.body.appendChild(petal);
-
-  // Randomized floating motion
-  const endX = startX + (Math.random() * 200 - 100); // horizontal drift
-  const endY = startY - (400 + Math.random() * 200); // upward float
-  const rotation = (Math.random() * 720 - 360);
-  const duration = 2500 + Math.random() * 1000;
-
-  petal.animate([
-    { transform: 'translate(0px,0px) rotate(0deg)', opacity: 0.9 },
-    { transform: `translate(${endX - startX}px, ${endY - startY}px) rotate(${rotation}deg)`, opacity: 0 }
-  ], {
-    duration: duration,
-    easing: 'ease-out'
-  });
-
-  setTimeout(() => petal.remove(), duration + 50);
+document.getElementById('yes').onclick=()=>{
+  reply.textContent="เย้ ดีใจมากเลย 💫 แล้วเจอกันคืนลอยกระทงนะ 💕";
+  reply.style.opacity=1;
+}
+document.getElementById('maybe').onclick=()=>{
+  reply.textContent="ได้เลย เก้ดสะดวกเมื่อไหร่ก็บอกน้า 🌙";
+  reply.style.opacity=1;
 }
 </script>
 
