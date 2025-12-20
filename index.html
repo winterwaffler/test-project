@@ -1,407 +1,407 @@
-<!doctype html>
-<html lang="th">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Loy Krathong Invitation 🌕</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Merry Christmas 🎄</title>
 
 <style>
-:root {
-  --accent: #ffd86b;
-  --text: #fff9e6;
-  --bg-top: #0a0e2a;
-  --bg-bottom: #142a50;
-}
-html {
-  overflow: hidden; 
-}
-body {
+* {
   margin: 0;
-  font-family: Inter, sans-serif;
-  color: var(--text);
-  background: linear-gradient(to bottom, var(--bg-top) 0%, var(--bg-bottom) 100%);
-  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(#00111a, #0b3d2e);
+  color: white;
+
+  overflow-x: hidden;   /* lock horizontal movement */
+  overflow-y: auto;     /* allow vertical scrolling */
+
+  width: 100%;
+  position: relative;
+}
+
+section {
   height: 100vh;
+  position: relative;
+}
+
+.tree,
+.sky {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ---------- SKY ---------- */
+.sky {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-}
-
-/* 🌕 Moon */
-.moon {
-  position: absolute;
-  top: 60px;
-  right: 80px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff9d9 0%, #f8d86c 70%, transparent 100%);
-  box-shadow: 0 0 40px 10px rgba(255, 247, 200, 0.3);
-  z-index: 1;
-}
-
-/* 🌊 River */
-.river {
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
-  height: 180px;
-  overflow: hidden;
-  background: linear-gradient(to top, #001f33 0%, #033a5b 60%, transparent 100%);
-}
-
-
-/* 🪷 Krathongs */
-.krathong {
-  position: absolute;
-  bottom: 30px;
-  width: 80px;
-  /* start offscreen left */
-  left: -120px;
-}
-
-/* Floating from offscreen left to offscreen right */
-@keyframes floatLinear {
-  0% { left: -120px; }
-  100% { left: 120vw; } /* move fully offscreen right */
-}
-
-.krathong img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* 💌 Invitation card */
-.wrap {
-  position: relative;
-  z-index: 2;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 16px;
-  padding: 24px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  max-width: 400px;
   text-align: center;
-  margin-bottom: 200px;
-  animation: fadeIn 1.5s ease;
+}
+.sky::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+  filter: blur(40px);
 }
 
-/* Fade-in for card */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+.intro {
+  text-align: center;
+  line-height: 1.4;
+  animation: introFade 2.5s ease-out forwards;
 }
 
-h2 {
-  font-family: 'Dancing Script', cursive;
-  color: var(--accent);
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
-.open-btn {
-  padding: 12px 28px;
-  border-radius: 50px;
-  border: none;
-  background: linear-gradient(145deg, #ffe5a8, #ffd86b);
-  color: #5b4400;
+/* Main title */
+.intro .title {
+  display: block;
+  font-size: clamp(3rem, 6vw, 4.5rem);
   font-weight: 600;
-  cursor: pointer;
-  margin: 16px 0;
-  font-size: 16px;
-  transition: all 0.2s ease;
-}
-.open-btn:hover { transform: translateY(-2px); }
+  letter-spacing: 0.15em;
+  margin: 15px 0;
 
-.message {
-  font-family: 'Dancing Script', cursive;
-  font-size: 20px;
-  opacity: 0;
-  line-height: 1.6;
-  white-space: pre-line;
-  transition: opacity 1s ease;
-}
-.show { opacity: 1; }
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #e6f7ff,
+    #ffffff
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
-.response {
-  display: none;
-  margin-top: 20px;
-}
-.response button {
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: var(--accent);
-  font-family: 'Dancing Script', cursive;
-  font-size: 18px;
-  padding: 6px 18px;
-  border-radius: 20px;
-  cursor: pointer;
-  margin: 0 8px;
-  transition: .3s;
-}
-.response button:hover {
-  background: rgba(255,255,255,0.25);
+  text-shadow:
+    0 0 25px rgba(255,255,255,0.4),
+    0 0 60px rgba(180,220,255,0.25);
+
+  animation: shimmer 6s ease-in-out infinite;
 }
 
-.reply {
-  margin-top: 20px;
-  font-family: 'Dancing Script', cursive;
-  font-size: 20px;
-  color: var(--accent);
-  opacity: 0;
-  transition: opacity .8s;
+/* Snowflakes */
+.intro .flakes {
+  font-size: 2.2rem;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
 }
 
-/* 📱 Optimized for 393x852 phones */
-@media (max-width: 430px) {
-  .moon {
-    top: 24px;
-    right: 24px;
-    width: 65px;
-    height: 65px;
-    box-shadow: 0 0 25px 6px rgba(255, 247, 200, 0.25);
-  }
-
-  .river {
-    height: 130px;
-    background: linear-gradient(to top, #001a2a 0%, #02405d 60%, transparent 100%);
-  }
-
-  .krathong {
-    width: 55px;
-    animation-duration: 16s;
-  }
-  .krathong:nth-child(1) { animation-duration: 15s; }
-  .krathong:nth-child(2) { animation-duration: 17s; }
-  .krathong:nth-child(3) { animation-duration: 18s; }
-
-  .wrap {
-    max-width: 90%;
-    margin-bottom: 130px;
-    padding: 18px;
-  }
-
-  .card {
-    border-radius: 14px;
-    padding: 20px;
-  }
-
-  h2 {
-    font-size: 22px;
-    margin-bottom: 6px;
-  }
-
-  .message {
-    font-size: 17px;
-    line-height: 1.5;
-  }
-
-  .open-btn {
-    font-size: 15px;
-    padding: 10px 22px;
-  }
-
-  .response button {
-    font-size: 16px;
-    padding: 6px 14px;
-  }
-
-  .reply {
-    font-size: 18px;
-  }
+/* Subtitle */
+.intro .subtitle {
+  display: block;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  animation: pulse 2.5s ease-in-out infinite;
 }
 
-#fwContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0; /* behind everything */
-}
 
-.firework-line {
+/* ---------- TREE ---------- */
+.tree-container {
   position: absolute;
-  width: 2px;           /* thickness of streak */
-  height: 60px;         /* length of streak */
-  background: red;
-  opacity: 1;
-  border-radius: 1px;
-  transform-origin: bottom center; /* pivot at bottom */
-  animation: explode 2s forwards;
-}
-
-@keyframes explode {
-  to {
-    transform: rotate(var(--angle)) translateY(-var(--distance));
-    opacity: 0;
-  }
-}
-
-.firework-particle {
-  position: absolute;
-  width: 8px;       /* bigger particle */
-  height: 8px;
-  border-radius: 50%;
-  opacity: 1;
-  transform: translate(0,0);
-  animation: fwMove 3s linear forwards; /* slow 3s animation */
-}
-
-
-@keyframes particleBurst {
-  0% { opacity: 1; transform: translate(0,0) scale(0.5); }
-  80% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(1); }
-  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
-}
-.wat-arun {
-  position: absolute;
-  bottom: 80px; /* closer to river */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1; /* above river, below card */
-  width: 60vh;   /* bigger relative to viewport */
-  max-width: 600px; /* prevent extreme size on huge screens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+.tree-container::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  width: 220px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(0,0,0,0.25), transparent 70%);
+  filter: blur(10px);
 }
 
-.wat-arun img {
-  width: 100%;
+.tree-gif {
+  width: 1000px;        /* adjust size */
+  max-width: 80vw;
   height: auto;
-  display: block;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+}
+
+.tree::before,
+.tree::after {
+  content: "";
+  position: absolute;
+  bottom: 100px;
+  width: 300px;
+  height: 200px;
+  background: radial-gradient(circle, #ffffff 60%, transparent 70%);
+  border-radius: 50%;
+  z-index: 4;
+}
+
+.tree::before {
+  left: -100px;
+}
+
+.tree::after {
+  right: -100px;
+}
+
+/* ---------- GROUND ---------- */
+.ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #f3f9ff 45%,
+    #e1efff 100%
+  );
+  z-index: 5;
+  overflow: visible;
+}
+
+/* Snow bank layers */
+.ground::before,
+.ground::after {
+  content: "";
+  position: absolute;
+  top: -90px;
+  width: 120%;
+  height: 140px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+/* Front mound */
+.ground::before {
+  left: -10%;
+}
+
+/* Back softer mound */
+.ground::after {
+  top: -120px;
+  left: -5%;
+  opacity: 0.6;
+}
+
+/* ---------- MESSAGE ---------- */
+.message {
+  position: absolute;
+  bottom: 190px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1s ease;
+  z-index: 20;
+}
+
+.message.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* ---------- SNOW ---------- */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  z-index: 999;
+}
+
+#sound-gate {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.sound-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.sound-card {
+  padding: 20px 36px;
+  border-radius: 40px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  box-shadow: 0 0 30px rgba(255,255,255,0.25);
+  cursor: pointer;
+  animation: hintPulse 2s ease-in-out infinite;
+  text-align: center;
+}
+
+.sound-hint {
+  font-size: 0.7;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+@keyframes hintPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 10px gold); }
+  to   { filter: drop-shadow(0 0 20px gold); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes introFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 </style>
 </head>
+
 <body>
 
-<!-- 🌕 Moon -->
-<div class="moon"></div>
+<section class="sky">
+  <h1 class="intro">
+  <span class="title">Merry Christmas</span>
 
-<div class="firework-container" id="fwContainer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;"></div>
+  <span class="subtitle">Scroll down ↓</span>
+</h1>
 
-<div class="wat-arun">
-  <img src="images/wat-arun.png" alt="Wat Arun">
-</div>
+</section>
 
-<!-- 🌊 River and krathongs -->
-<div class="river">
-  <div class="krathong"><img src="images/krathong.png" alt="krathong"></div>
-  <div class="krathong"><img src="images/lotus.png" alt="krathong"></div>
-  <div class="krathong"><img src="images/baitoey.png" alt="krathong"></div>
-</div>
+<section class="tree">
+  <div class="tree-scene">
 
-<!-- 💌 Invitation card -->
-<div class="wrap">
-  <div class="card">
-    <h2>Loy Krathong Night 🌕</h2>
-    <button class="open-btn" id="open">Click me!</button>
+    <div class="tree-container">
+      <img src="images/christmas-tree.gif" alt="Christmas Tree" class="tree-gif">
+    </div>
+
+    <div class="ground"></div>
     <div class="message" id="message">
-      สวัสดีเก้ดด 💛  
-      ปีนี้อยากชวนไปลอยกระทงด้วยกัน 🎆  
-      เดินดูแสงไฟกับเสียงน้ำเบาๆ 🌊  
-      แล้วขอพรใต้แสงจันทร์ด้วยกันนะ 🌕  
-      ถ้าเก้ดว่าง...ไปด้วยกันน้า 🌸
+      <h2>For You ❤️</h2>
+      <p>
+        This year felt a little brighter<br>
+        because you were in it ✨<br><br>
+        I hope your Christmas is warm,<br>
+        magical, and full of smiles.
+      </p>
     </div>
-    <div class="response" id="response">
-      <button id="yes">ไปสิ 💕</button>
-      <button id="maybe">ขอดูก่อน 😅</button>
+
+  </div>
+</section>
+
+<audio id="bg-music" loop preload="auto" playsinline>
+  <source src="audio/christmas.mp3" type="audio/mpeg">
+</audio>
+<div id="sound-gate">
+  <div class="sound-wrapper">
+    <div class="sound-card">
+      Enter website
     </div>
-    <div class="reply" id="reply"></div>
+    <div class="sound-hint">
+      🎧 Wear headphones for the best experience
+    </div>
   </div>
 </div>
-
 <script>
-const openBtn = document.getElementById('open');
-const msg = document.getElementById('message');
-const response = document.getElementById('response');
-const reply = document.getElementById('reply');
-const krathongs = document.querySelectorAll('.krathong');
-
-krathongs.forEach((k, i) => {
-  const duration = 15 + Math.random() * 10;   // speed
-  const bottom = 20 + Math.random() * 30;     // vertical offset
-  const delay = i * 3 + Math.random() * 2;    // staggered release
-
-  k.style.bottom = `${bottom}px`;
-  k.style.animation = `floatLinear ${duration}s linear ${delay}s infinite`;
-});
-
-openBtn.addEventListener('click', () => {
-  msg.classList.add('show');
-  response.style.display = 'block';
-  openBtn.disabled = true;
-});
-
-document.getElementById('yes').onclick = () => {
-  reply.textContent = "เย้ ดีใจมากเลย 💫 แล้วเจอกันคืนลอยกระทงนะ 💕";
-  reply.style.opacity = 1;
-};
-document.getElementById('maybe').onclick = () => {
-  reply.textContent = "ได้เลย เก้ดสะดวกเมื่อไหร่ก็บอกน้า 🌙";
-  reply.style.opacity = 1;
-};
-
-const fwContainer = document.getElementById('fwContainer');
-const colors = [
-  '#FFD700', // gold
-  '#FF4500', // orange-red
-  '#FF69B4', // hot pink
-  '#1E90FF', // dodger blue
-  '#32CD32', // lime green
-  '#FF8C00', // dark orange
-  '#BA55D3'  // medium orchid (purple)
-];
-
-function spawnParticleBurst() {
-  const x = Math.random() * window.innerWidth;
-  const y = Math.random() * window.innerHeight * 0.5; // top half only
-  const numParticles = 80 + Math.floor(Math.random() * 50); // very dense
-  const color = colors[Math.floor(Math.random() * colors.length)];
-  const maxDistance = 120 + Math.random() * 60; // particle spread
-
-  for (let i = 0; i < numParticles; i++) {
-    const particle = document.createElement('div');
-    const size = 2 + Math.random() * 3; // varying particle size
-    particle.style.position = 'absolute';
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.borderRadius = '50%';
-    particle.style.background = color;
-    particle.style.left = `${x}px`;
-    particle.style.top = `${y}px`;
-    particle.style.opacity = 1;
-    particle.style.filter = 'blur(1px)';
-
-    const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * maxDistance;
-
-    particle.animate([
-      { transform: `translate(0,0) scale(0.5)`, opacity: 1 },
-      { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1)`, opacity: 0 }
-    ], {
-      duration: 2000 + Math.random() * 1000, // 2–3 seconds
-      easing: 'ease-out',
-      fill: 'forwards'
-    });
-
-    fwContainer.appendChild(particle);
-    setTimeout(() => particle.remove(), 2000);
-  }
+// ---------- MESSAGE ----------
+function openGift() {
+  document.getElementById("message").classList.add("show");
 }
 
-// Spawn bursts every 2–3 seconds
-setInterval(() => {
-  if (Math.random() < 0.7) spawnParticleBurst();
-}, 800);
+// ---------- SNOW ----------
+for (let i = 0; i < 60; i++) {
+  const snow = document.createElement("div");
+  snow.className = "snowflake";
+  snow.innerHTML = "❄";
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.fontSize = (10 + Math.random() * 20) + "px";
+  snow.style.animationDuration = (3 + Math.random() * 5) + "s";
+  document.body.appendChild(snow);
+}
 
+// ---------- BACKGROUND MUSIC ----------
+const music = document.getElementById("bg-music");
+
+function enableSound() {
+  music.volume = 0;
+  music.play();
+
+  let vol = 0;
+  const fade = setInterval(() => {
+    if (vol < 0.35) {
+      vol += 0.02;
+      music.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  }, 150);
+
+  document.getElementById("sound-gate").remove();
+}
+
+document.getElementById("sound-gate").addEventListener("click", enableSound);
 </script>
-
 </body>
 </html>
