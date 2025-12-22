@@ -190,25 +190,64 @@ section {
 
 /* ---------- MESSAGE ---------- */
 .message {
-  position: absolute;
-  bottom: 190px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 500px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 1s ease;
-  z-index: 20;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+
+  font-size: 1.15rem;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+
+  opacity: 0.9;
+}
+.message p {
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #e6f7ff,
+    #ffffff
+  );
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 20px rgba(255,255,255,0.35),
+    0 0 50px rgba(180,220,255,0.25);
+
+  animation: shimmer 8s ease-in-out infinite;
+}
+/* first line slightly larger */
+.message:first-child {
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
 }
 
-.message.show {
+.message-stack {
+  max-width: 520px;
+  margin: 120vh auto 300px;
+  padding: 0 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 140px;
+
+  position: relative;
+  z-index: 15; 
+}
+
+/* hidden state */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+
+/* visible state */
+.reveal.show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
+  transform: translateY(0);
 }
 
 /* ---------- SNOW ---------- */
@@ -258,6 +297,25 @@ section {
   letter-spacing: 0.15em;
   opacity: 0.7;
   text-transform: uppercase;
+}
+.card-notice {
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  text-align: center;
+}
+
+/* soft floating animation */
+@keyframes noticeFloat {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
 }
 
 @keyframes hintPulse {
@@ -323,8 +381,6 @@ section {
 
 <section class="sky">
   <h1 class="intro">
-  <span class="title">Merry Christmas</span>
-
   <span class="subtitle">Scroll down ↓</span>
 </h1>
 
@@ -332,21 +388,38 @@ section {
 
 <section class="tree">
   <div class="tree-scene">
+      <div class="message-stack">
+
+      <div class="message reveal">
+        <p>If you got sent this…</p>
+      </div>
+
+      <div class="message reveal">
+        <p>
+          That probably means<br>
+          I couldn’t give it to you in person.
+        </p>
+      </div>
+
+      <div class="message reveal">
+        <p>
+          Soooo… here it is<br>
+        </p>
+      </div>
+
+      <div class="message reveal">
+        <p>
+          Merry Christmas!
+        </p>
+      </div>
+
+    </div>
 
     <div class="tree-container">
       <img src="images/christmas-tree.gif" alt="Christmas Tree" class="tree-gif">
     </div>
 
     <div class="ground"></div>
-    <div class="message" id="message">
-      <h2>For You ❤️</h2>
-      <p>
-        This year felt a little brighter<br>
-        because you were in it ✨<br><br>
-        I hope your Christmas is warm,<br>
-        magical, and full of smiles.
-      </p>
-    </div>
 
   </div>
 </section>
@@ -356,8 +429,10 @@ section {
 </audio>
 <div id="sound-gate">
   <div class="sound-wrapper">
+    <div class="card-notice">🎄 You’ve got a card!! 🎄</div>
+
     <div class="sound-card">
-      Enter website
+      TAP TO OPEN
     </div>
     <div class="sound-hint">
       🎧 Wear headphones for the best experience
@@ -402,6 +477,26 @@ function enableSound() {
 }
 
 document.getElementById("sound-gate").addEventListener("click", enableSound);
+
+const reveals = document.querySelectorAll(".reveal");
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        revealObserver.unobserve(entry.target); // reveal once
+      }
+    });
+  },
+  {
+    root: null,
+    rootMargin: "0px 0px -30% 0px",
+    threshold: 0
+  }
+);
+
+reveals.forEach((el) => revealObserver.observe(el));
 </script>
 </body>
 </html>
