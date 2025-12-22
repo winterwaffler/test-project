@@ -23,8 +23,8 @@ body {
   position: relative;
 }
 
-section {
-  height: 100vh;
+section.tree {
+  min-height: 220vh; /* gives room for scrolling messages */
   position: relative;
 }
 
@@ -194,7 +194,7 @@ section {
   margin: 0 auto;
   text-align: center;
 
-  font-size: 1.15rem;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
   line-height: 1.8;
   letter-spacing: 0.08em;
 
@@ -213,28 +213,33 @@ section {
   -webkit-text-fill-color: transparent;
 
   text-shadow:
-    0 0 20px rgba(255,255,255,0.35),
-    0 0 50px rgba(180,220,255,0.25);
+    0 0 10px rgba(255,255,255,0.6),
+    0 0 25px rgba(200,230,255,0.6),
+    0 0 60px rgba(180,220,255,0.45),
+    0 0 120px rgba(150,210,255,0.25);
 
   animation: shimmer 8s ease-in-out infinite;
 }
 /* first line slightly larger */
 .message:first-child {
-  font-size: 1.4rem;
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
   letter-spacing: 0.12em;
 }
-
+.message:last-child p {
+  font-size: clamp(2.2rem, 5vw, 2.8rem);
+  letter-spacing: 0.15em;
+}
 .message-stack {
   max-width: 520px;
-  margin: 120vh auto 300px;
+  margin: 40vh auto 300px;
   padding: 0 20px;
 
   display: flex;
   flex-direction: column;
-  gap: 140px;
+  gap: 800px;
 
   position: relative;
-  z-index: 15; 
+  z-index: 20;
 }
 
 /* hidden state */
@@ -397,7 +402,7 @@ section {
       <div class="message reveal">
         <p>
           That probably means<br>
-          I couldn’t give it to you in person.
+          I couldn’t give the card to you in person.
         </p>
       </div>
 
